@@ -46,8 +46,10 @@ Model code is exported in `watches_lgbm_initial_model.pkl`
 4. Open a terminal inside the bin folder and run the following command so that MacOS can verify the app.
 <br/>
 ```cd /usr/local/bin```
+<br/>
 ```xattr -d com.apple.quarantine chromedriver```
-5. Install Selenium: ```pip3 install selenium```
+<br/>
+5. Install Selenium: ```pip3 install selenium```<br/>
 6. When runnig code on MacOS, the `py` files for webscraping code should contain: 
 <br/>
 ```service = Service('/usr/local/bin/chromedriver')```

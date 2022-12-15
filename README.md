@@ -34,7 +34,6 @@ Model code is exported in ```watches_lgbm_initial_model.pkl```
 5. Code for application is in files:
 <br/>
 ```server.py```
-
 <br/>
 
 # Troubleshooting tips:

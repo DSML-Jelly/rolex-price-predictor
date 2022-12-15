@@ -33,7 +33,9 @@ Model code is exported in ```watches_lgbm_initial_model.pkl```
 
 5. Code for application is in files:
 <br/>
-```server.py```
+```
+server.py
+```
 <br/>
 
 # Troubleshooting tips:
@@ -43,12 +45,18 @@ Model code is exported in ```watches_lgbm_initial_model.pkl```
 2. Download the Chrome WebDriver Zip File matching with your Chrome version and Apple Chip from ```https://chromedriver.storage.googleapis.com/index.html``` and extract the chromedriver
 3. Copy the chromedriver and paste it to ```/usr/local/bin``` (If this folder doesn’t exist then create one)
 4. Open a terminal inside the bin folder and run the following command so that MacOS can verify the app.
-<br/>```cd /usr/local/bin```<br/>
-`xattr -d com.apple.quarantine chromedriver`
-<br/>
-5. Install Selenium: ```pip3 install selenium```<br/>
+```
+cd /usr/local/bin
+xattr -d com.apple.quarantine chromedriver
+```
+5. Install Selenium: 
+```
+pip3 install selenium
+```
 6. When runnig code on MacOS, the ```py``` files for webscraping code should contain: 
-<br/>```service = Service('/usr/local/bin/chromedriver')```
+```
+service = Service('/usr/local/bin/chromedriver')
+```
 
 
 

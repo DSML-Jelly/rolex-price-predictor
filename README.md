@@ -28,7 +28,7 @@ Model code is exported in ```watches_lgbm_initial_model.pkl```
 # To Do:
 1. Make sure everything is able to be run
 
-2. Finish flask server. Using the data received from the form, populate an array (should match the number of columns in the data set) to pass into the model to predict results. Once completed, test to see if the prediction is working and outputing data into the next page.
+2. Finish flask server. Using the data received from the form, populate an array (should match the number of columns in the data set) to pass into the model to predict results. Once completed, test to see if the prediction is working and outputing data into the next page. (Tips are provided in the comments in the file)
 
 3. Automate data retrieval such that webscraping will only scrape new entries to the website (i.e. new watches that were sold)
 

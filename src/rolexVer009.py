@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import re
 from random import randint
 import time
+from tqdm import tqdm
 from time import sleep
 import json
 import math
@@ -74,7 +75,13 @@ def processAuction(auction):
     # Process listing__statPrice
     value = dataDict['listing__statPrice']
     value = re.findall('\d',value)
-    dataDict['listing__statPrice'] = int(''.join(value))
+    try:
+        dataDict['listing__statPrice'] = int(''.join(value))
+    except:
+        print("Value skipped", value)
+        dataDict['listing__statPrice'] = 0
+
+        # dataDict['listing__statPrice'] = int(float((''.join(value))))
 
 
     for element in driver.find_elements(By.CLASS_NAME, 'column'):
@@ -117,6 +124,8 @@ def getListOfDictionaries(website):
 # Number of pages
 website="https://www.watchcollecting.com/?refinementList%5Bstage%5D%5B0%5D=sold&refinementList%5BvehicleMake%5D%5B0%5D=Rolex&page=1"
 driver.get(website)
+driver.maximize_window() # For maximizing window
+driver.implicitly_wait(20) # gives an implicit wait for 20 seconds
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div[2]/div/div[2]/div/div[1]/div/a[4]/span')))
 searchNumber = driver.find_element(By.XPATH, '/html/body/main/div[2]/div/div[2]/div/div[1]/div/a[4]/span').get_attribute('innerHTML')
 # instead of 24 you can use length of list of items 
@@ -151,7 +160,7 @@ dataCSV = []
 # for i in range(20,25):
 # for i in range(25,30):
 # for i in range(30,num_pages+1):
-for i in range(1,num_pages+1):
+for i in tqdm(range(1,num_pages+1)):
 # for i in range(1,2)
     # lenDataBefore=len(data)
     # sleep(randint(2,10))

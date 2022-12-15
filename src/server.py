@@ -13,6 +13,8 @@ def index():
 @app.route("/results", methods=['POST'])
 def output_quote():
     quote = request.form
+    # Need to grab values from submission form and map throught them to send through model
+    # For radio buttons, it assigns 1 to correct value, but you need to programmatically set other values to 0
     return render_template('quote.html')
 
 if __name__ == '__main__':

@@ -19,12 +19,10 @@ Code is in ```currencypaul002.py```
 At the beginning the data are reading from file ```data\dataAutoVer009.csv```
 At the end the updated data are exported into file ```dataWithCurrencyVer002.csv```
 
-3. Code for data cleaning and preparing is in ```cleaningRolexVer011WholeCode.py```
-<br/>
-At the beginning the data are reading from file ```dataWithCurrencyVer002.csv```
-<br/>
-At the end the updated data are exported into file ```reformatedAndOneHotEncodedDataVer011.csv```
+3. Code for data cleaning and preparing is in `cleaningRolexVer011WholeCode.py`
 
+At the beginning the data are reading from file `dataWithCurrencyVer002.csv`
+At the end the updated data are exported into file `reformatedAndOneHotEncodedDataVer011.csv`
 
 4. Model is created in the Jupiter Notebook: 
 <br/>
@@ -33,9 +31,7 @@ Model code is exported in ```watches_lgbm_initial_model.pkl```
 
 5. Code for application is in files:
 <br/>
-```
-server.py
-```
+```server.py```
 <br/>
 
 # Troubleshooting tips:

@@ -8,9 +8,9 @@
 # Process:
 1. Websraping Data from the webpage https://www.watchcollecting.com
 <br/>
-Code is in ```rolexVer009.py```
-The path needs to be setup here: ```service = Service('/usr/local/bin/chromedriver')```
-The data are saved into file ```dataAutoVer009.csv```
+Code is in `rolexVer009.py`
+The path needs to be setup here: `service = Service('/usr/local/bin/chromedriver')`
+The data are saved into file `dataAutoVer009.csv`
 
 2. Websraping Data from the webpage https://www.ofx.com/en-us/forex-news/historical-exchange-rates/
 <br/>

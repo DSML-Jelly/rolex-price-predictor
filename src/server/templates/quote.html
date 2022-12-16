@@ -1,4 +1,19 @@
-<div style="height:85%;width:50%;border-radius:3%;padding:24px;border:2px black solid;">
-    <h1>Rolex Price Estimator</h1>
-    <p>Your ROLEX is worth $12345 with probability of 67%</p>    
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/quote.css') }}">
+    <title>Predicted Output</title>
+</head>
+<body>
+    <div id='prediction'>
+        <h1>Rolex Price Estimator</h1>
+        <p>Your {{watchName}} ROLEX is worth ${{prediction}}</p>
+    </div>
+    <div id="coefs">
+        
+    </div>
+</body>
+</html>

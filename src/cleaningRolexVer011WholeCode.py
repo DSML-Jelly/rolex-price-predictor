@@ -22,14 +22,11 @@ Index(['listing__statPrice', 'listing__statTime', 'product-subtitle', 'Model',
 '''
 
 ######################## DIALs ######### 'Dial' #######################
+# Note: dialCounter does the same thing as df['Dial'].value_counts() 
 dial = list(df.Dial.values)
-# print(dial[:30])
 dialCounter = Counter(dial)
-# print(dialCounter)
-'''
 
-'''
-# print(len(dialCounter))   # ->  141 items
+# print(len(dialCounter))   # ->  141 items (now it's 143 items)
 # print('K' in dialCounter,dialCounter['K'])  # False 0
 
 keyWords = set()
@@ -42,7 +39,7 @@ for key in dialCounter:
             keyWords = keyWords.union(words)
 
 # print(keyWords) 
-# print(len(keyWords))   # ->  107 items
+# print(len(keyWords))   # ->  107 items (now 108 items)
 '''
 {'', 'Sundustwith', 'Silverwith', "Honeycomb'", 'Hour', 'Pavé', "Cream'", 'K', 'D-blue', "Green'", 'Purple', 'Green', 'Grape', 'Z-blue', 'Pearlwith', 'Midnight', 'Flower', 'Red', 'Rhodium', 
 'Palm', 'Baguette', 'Roman', 'Yellow', 'With', 'Stick', 'Indices', 'Blackand', 'Candy', 'Lapis', 'Salmon', 'Intense', 'Ice', 'Gilt', 'Arabic', 'Lotus', 'Pinkwithdiamonds', 'Greenwith', 
@@ -73,7 +70,7 @@ for word in keyWords:
     if 1<len(word):
         cleanKeyWords.add(word)
 
-# print(len(cleanKeyWords))  # ->  73 items
+# print(len(cleanKeyWords))  # ->  73 items (still 73 descriptors)
 # print(cleanKeyWords)
 
 '''
@@ -110,42 +107,6 @@ groups = { 'allDiamond': ['Pav'],
         #    'Rolex', 'Racing', 'Olive', 'Numeral', 'Red', 'Candy', 'Mint', 'Honeycomb'],    
          }
 
-# Data quality control:
-# groupsFlatten = set(reduce(lambda a,b:a+b, groups.values()))
-# print('Groups contains all possible values:')
-# print(set(cleanKeyWords) == groupsFlatten)
-# print(set(cleanKeyWords))
-# print(groupsFlatten)
-# print(len(set(cleanKeyWords)))
-# print(len(groupsFlatten))
-# print('Not in groups')
-# for word in cleanKeyWords:
-#     if word not in groupsFlatten:
-#         print(word)
-# print('Not in cleanKeyWords')
-# for word in groupsFlatten:
-#     if word not in cleanKeyWords:
-#         print(word)
-# print(sorted(cleanKeyWords))
-# print(sorted(groupsFlatten))
-
-# # Manual One Hot Encoding without groups
-# n = df.shape[0]
-# # print(df.shape,n)
-# for word in cleanKeyWords:
-#     df['dial'+word] = [0]*n
-# # print(df.shape)
-
-# for i in range(len(df)):
-#     actual = df.loc[i,'Dial']
-#     for word in cleanKeyWords:
-#         if word in actual:
-#             df.loc[i,'dial'+word] = 1
-
-# # df = df.drop('Bracelet', axis=1)
-# print(df.head(10))
-# print(len(cleanKeyWords))  # ->  73 items
-
 # Manual One Hot Encoding with groups
 whichGroup = {}
 for group in groups:
@@ -153,45 +114,34 @@ for group in groups:
         whichGroup[word]=group
 # print(whichGroup)
 
+# Same as len(df) 
 n = df.shape[0]
-# print(df.shape,n)
+
 for key in groups.keys():
+    # This creates new columns in df that are all 0s 
     df[key] = [0]*n
-# print(df.shape)
+# This creates a set of all of the values that were in their groups dictionary
 groupsFlatten = set(reduce(lambda a,b:a+b, groups.values()))
 for i in range(len(df)):
+    # This is the value (string) that's in df['Dial']
     actual = df.loc[i,'Dial']
     for word in groupsFlatten:
         if word in actual:
+            # Add 1 to the corresponding column (allDiamond, preciousStone, or someDiamonds)
             df.loc[i,whichGroup[word]] = 1
 df = df.drop('Dial', axis=1)
-# print(df.head(10))
+# print(df.head()
 # print(df[['Dial','allDiamond','preciousStone','someDiamonds']].head(30))
 print()
 print('DIAL One-Hot-Encoding Finished.')
 
 
 ######################## BRACELETs ######### 'Bracelet' #######################
+
+# Note: braceletCounter does the same thing as df.Bracelet.value_counts()
 bracelet = list(df.Bracelet.values)
-# print(bracelet[:30])
 braceletCounter = Counter(bracelet)
-# print(braceletCounter)
-'''
-Counter({'StainlessSteelOyster': 395, 'StainlessSteelJubilee': 60, 'SteelandYellowGoldOyster': 53, 'StainlessSteel': 36, 'YellowGoldOyster': 35, 
-'BlackOysterflex': 26, 'WhiteGoldOyster': 21, 'SteelandRoseGoldOyster': 18, 'RoseGoldOyster': 18, 'SteelandYellowGoldJubilee': 14, 
-'YellowGoldPresident': 9, 'YellowGold': 9, 'StainlessSteel,Oyster': 9, 'BlackAlligator': 6, 'PlatinumOyster': 6, 'WhiteGoldPresident': 5, 
-'BlackRubber': 5, 'Oysterflex': 5, 'StainlessSteelandGoldOyster': 5, 'LeatherStrap': 5, 'RubberOysterFlex': 5, 'RoseGoldPresident': 4, 
-'SteelandRoseGoldJubilee': 4, 'WhiteGold': 4, 'BrownAlligator': 4, 'StainlessSteelOysterBracelet': 4, 'SteelandYellowGold': 3, 'StainlessSteelandYellowGold': 3, 
-'BrownLeatherStrap': 3, 'BlackAlligatorStrap': 3, 'BlackOysterFlex': 2, 'SteelAndYellowGoldOyster': 2, 'BlackRubberOysterflex': 2, 'Steel&amp;RoseGoldJubilee': 2, 
-'PlatinumPresident': 2, 'BrownCrocodileLeather': 2, 'BlackCrocodileLeather': 2, 'SteelandGold': 2, '18KYellowGoldPresident': 2, 'StainlessSteel&amp;GoldOyster': 2, 
-'StainlessSteelandRoseGold': 2, 'OysterStainlessSteel': 2, 'OysterSteel': 2, 'BlackLeatherStrap': 2, 'PlatinumOysterBracelet': 2, 'SteelandGoldOyster': 2, 
-'SteelandRoseGoldJubileee': 1, 'PinkAlligator': 1, 'Steel/YellowGoldJubilee': 1, 'YellowGoldJubilee': 1, 'Steel&amp;18KYellowGold': 1, 'SteelandYellowOyster': 1, 
-'BlackOysyerflex': 1, 'RoseGold': 1, 'Jubilee': 1, 'StainlessOysterSteel': 1, 'Bracelet': 1, 'SteelandGoldJubilee': 1, 'Steel&amp;YellowGoldOyster': 1, 
-'StainlessSteelOysterBraclelet': 1, 'RoseGoldandSteelOyster': 1, 'Steel&amp;YellowGold': 1, 'StainlessSteelandGoldJubilee': 1, 'BlackRubberStrap': 1, 
-'BlackLeather': 1, 'YellowGoldPresdient': 1, 'FabricStrap': 1, 'StainlessSteel&amp;Gold': 1, 'StainlessSteel/EveroseOyster': 1, 'RoseGoldPearlmaster': 1, 
-'EveroseGold': 1, 'EveroseOyster': 1, 'SteelJubilee': 1, 'Steel&amp;Gold,Oyster': 1, 'SteelandRoseGold': 1, 'StainlessSteel,Jubilee': 1, 'RubberOysterflex': 1, 
-'StainlessSteel/GoldOyster': 1, 'Steel/RoseGoldOyster': 1, 'OysterFlex': 1, 'CrocodileStrap': 1, 'SteelOyster': 1, 'Steel/GoldJubilee': 1})
-'''
+
 # print(len(braceletCounter))   # ->  83 items
 # print('K' in braceletCounter,braceletCounter['K'])
 
@@ -227,7 +177,7 @@ for word in keyWords:
         cleanKeyWords.add(word)
 
 # print(cleanKeyWords)
-# print(len(cleanKeyWords))  # ->  24 items
+# print(len(cleanKeyWords))  # ->  24 items (still 24 items)
 '''
 {'Bracelet', 'Fabric', 'Rubber', 'Oyster', 'Brown', 'Steel', 'President', 'Pearlmaster', 'Everose', 'Alligator', 'Pink', 'Platinum', 'Oysterflex', 'Rose', 'Black', 'White', 
 'Crocodile', 'Gold', 'Strap', 'Stainless', 'Yellow', 'Flex', 'Leather', 'Jubilee'}
@@ -240,38 +190,6 @@ groups = {'braceletRubber' : ['Rubber', 'Black', 'Strap'],
                               'Stainless', 'Everose', 'Oyster', 'Flex', 'President', 'Jubilee', 'Rose']
          }
 
-# # Data quality control:
-# groupsFlatten = set(reduce(lambda a,b:a+b, groups.values()))
-# print('Groups contains all possible values:')
-# print(set(cleanKeyWords) == groupsFlatten)
-# print(set(cleanKeyWords))
-# print(groupsFlatten)
-# print(len(set(cleanKeyWords)))
-# print(len(groupsFlatten))
-# for word in cleanKeyWords:
-#     if word not in groupsFlatten:
-#         print(word)
-# for word in groupsFlatten:
-#     if word not in cleanKeyWords:
-#         print(word)
-# print(sorted(cleanKeyWords))
-# print(sorted(groupsFlatten))
-
-# # Manual One Hot Encoding without groups
-# n = df.shape[0]
-# # print(df.shape,n)
-# for word in cleanKeyWords:
-#     df['bracelet'+word] = [0]*n
-# # print(df.shape)
-# for i in range(len(df)):
-#     actual = df.loc[i,'Bracelet']
-#     for word in cleanKeyWords:
-#         if word in actual:
-#             df.loc[i,'bracelet'+word] = 1
-# # # df = df.drop('Bracelet', axis=1)
-# # print(df.head(10))
-# print(len(cleanKeyWords))  # ->  27 items
-
 # Manual One Hot Encoding with groups
 whichGroup = {}
 for group in groups:
@@ -280,10 +198,10 @@ for group in groups:
 # print(whichGroup)
 
 n = df.shape[0]
-# print(df.shape,n)
+
 for key in groups.keys():
     df[key] = [0]*n
-# print(df.shape)
+
 for i in range(len(df)):
     actual = df.loc[i,'Bracelet']
     for word in cleanKeyWords:

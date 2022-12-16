@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, Response, render_template
 import pickle
 
 app = Flask(__name__)
-model = pickle.load(open('src/watches_lgbm_initial_model.pkl', 'rb'))
+# model = pickle.load(open('src/watches_lgbm_initial_model.pkl', 'rb'))
 list_params = ["watch-model", "case-material", "strap-type", "dial-type", "case-size"]
 
 

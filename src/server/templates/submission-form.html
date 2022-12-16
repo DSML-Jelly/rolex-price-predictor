@@ -1,6 +1,15 @@
-<div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <title>Watch Price Predictions</title>
+</head>
+<body>
     <form id="submission-form" action="/results" method="post">
-        <div style="height:85%;width:50%;border-radius:3%;padding:24px;border:2px black solid;">
+        
             <h1>Rolex Price Estimator</h1>
             <fieldset>
                 <legend>Watch Model</legend>
@@ -105,8 +114,8 @@
             </fieldset>
 
             <div>
-                <button type="submit" id="submit" style="margin-top:24px;">Submit</button>
+                <button type="submit" id="submit">Submit</button>
             <div>
-        </div>
     </form>
-</div>
+</body>
+</html>

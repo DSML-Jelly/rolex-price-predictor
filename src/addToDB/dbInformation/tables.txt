@@ -1,0 +1,19 @@
+
+CREATE TABLE watchData(
+  watchdata_id INT GENERATED ALWAYS AS IDENTITY,
+  listing_statPrice INT,
+  product_subtitle VARCHAR(40),
+  Model VARCHAR(50),
+  Box VARCHAR(5),
+  Papers VARCHAR(5),
+  Age VARCHAR(10),
+  Movement VARCHAR(50),
+  ConditionGrade VARCHAR(50),
+  CaseSize VARCHAR(50),
+  Case_ VARCHAR(30),
+  Dial VARCHAR(50),
+  Bracelet VARCHAR(40),
+  LOT VARCHAR(50),
+  Location VARCHAR(100),
+  Seller VARCHAR(100)
+);

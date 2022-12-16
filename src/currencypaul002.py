@@ -8,13 +8,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import time
+from tqdm import tqdm
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
 import pandas as pd
 
 ############## READING DATA  ################
-fileName='data\dataAutoVer009.csv'
+fileName='data\dataAutoVer009_No15th.csv'
 df = pd.read_csv(fileName,header=0)
 
 ######################## CLEANING DATEs ##### 'listing__statTime' ##############
@@ -69,7 +70,7 @@ df.listing__statTime = reformatedDatesDDMMYY
 
 ############################## PAUL vvvv
 # for every unique currency
-for currency in df.Currency.unique():
+for currency in tqdm(df.Currency.unique()):
     # skip for USD
     if currency == 'USD':
         continue
@@ -83,12 +84,16 @@ for currency in df.Currency.unique():
     # options = Options()
     # options.headless = True
     # options.add_argument("--window-size=1920,1200")
-    service = Service('/users/paulj/chromedriver')
+    service = Service('/usr/local/bin/chromedriver')
     # service = Service('/usr/local/bin/chromedriver')   # Silvia
     #####################
     # driver = webdriver.Chrome(options=options, executable_path='/usr/local/bin/chromedriver')
     driver = webdriver.Chrome(service=service)   # Paul
+    ## Add waiting time
+    driver.maximize_window() # For maximizing window
+    driver.implicitly_wait(20) # gives an implicit wait for 20 seconds
     driver.get("https://www.ofx.com/en-us/forex-news/historical-exchange-rates/")
+
 
     # get xpath of currency 1 and 2
     currency1 = driver.find_element(By.XPATH, '//*[@id="react-select-2-input"]') 
@@ -105,6 +110,8 @@ for currency in df.Currency.unique():
     # change radio button to get daily exchange rates
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="choice_frequency_daily"]')))
     frequency = driver.find_element(By.XPATH, '//*[@id="choice_frequency_daily"]')
+    frequency.send_keys('Daily')    ## Added as chromedriver wasn't selecting 'Daily'
+    frequency.send_keys(Keys.ENTER)
 
     # scroll down such that click can work
     driver.execute_script("window.scrollBy(0,500)")
@@ -141,10 +148,10 @@ for currency in df.Currency.unique():
         # get number of days passed since start
         initial_ind = sold_date - three_years_back 
         # change to integers
-        initial_int = initial_ind.days
+        initial_int = initial_ind.days     ## Change as GBP doesn't have current date's value
         print(initial_int)
         print(sold_date)
-        if initial_int > 1075:
+        if initial_int > 1075:      ## Try with 1750 (5 years * 358.33 - est. missing dates)
             initial_int = 1075
         # grab date of table with index position 
         str_soldDate = driver.find_element(By.XPATH, '//*[@id="post-113886"]/div/div[2]/div/section/section[2]/div[2]/div/table/tbody/tr['+ str(initial_int) +']/td[1]')
@@ -158,7 +165,7 @@ for currency in df.Currency.unique():
         # else change adjust the date index position for table to match and then change sold price to USD
         else:
             diff = date_obj - sold_date 
-            initial_int = initial_int - diff.days
+            initial_int = initial_int - diff.days     ## Change as GBP doesn't have current date's value
             exchange_rate = driver.find_element(By.XPATH, '//*[@id="post-113886"]/div/div[2]/div/section/section[2]/div[2]/div/table/tbody/tr['+ str(initial_int) +']/td[2]')
             df.loc[i,['listing__statPrice']] = int(df.loc[i,['listing__statPrice']]) * float(exchange_rate.text)
 

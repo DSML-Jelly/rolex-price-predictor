@@ -196,13 +196,13 @@ print(dataCSV[:100])
 
 driver.quit()
 ################################
-fileName='dataAutoVer009.json'
+fileName='data\dataAutoVer009.json'
 
 with open(fileName, 'w') as file:
     json.dump(data, file)
 
 ################################
-fileName='dataAutoVer009.csv'
+fileName='data\dataAutoVer009.csv'
 
 # with open(fileName, 'w') as file:
 #     json.dump(dataCSV, file)

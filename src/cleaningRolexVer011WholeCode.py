@@ -5,7 +5,7 @@ from collections import Counter
 from functools import reduce
 
 # fileName='dataAutoVer009.csv'
-fileName='dataWithCurrencyVer002.csv'
+fileName='data/dataWithCurrencyVer002.csv'
 
 
 df = pd.read_csv(fileName,header=0)
@@ -544,5 +544,5 @@ df = df.drop(['Movement' , 'Age', 'ConditionGrade', 'Papers', 'Box', 'product-su
 print(df.columns)
 print(df.head(10))
 
-fileName='reformatedAndOneHotEncodedDataVer011.csv'
+fileName='new_reformatedAndOneHotEncodedDataVer011.csv'
 df.to_csv(fileName)
